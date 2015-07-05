@@ -1,5 +1,6 @@
 requires "AnyEvent" => "0";
 requires "AnyEvent::HTTPD" => "0";
+requires "AnyEvent::Log" => "0";
 requires "AnyEvent::Timer::Cron" => "0";
 requires "Moo" => "0";
 requires "Moo::Role" => "0";
@@ -8,6 +9,7 @@ requires "Object::Event" => "0";
 requires "OpenCloset::Patch::AnyEvent::HTTPD" => "0.002";
 requires "OpenCloset::Patch::Object::Event" => "0.002";
 requires "Scalar::Util" => "0";
+requires "Sys::Syslog" => "0";
 requires "namespace::clean" => "0";
 requires "perl" => "5.010";
 requires "utf8" => "0";
