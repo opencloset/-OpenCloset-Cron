@@ -1,5 +1,6 @@
 *.bak
 *.old
+*.swp
 *.tar.gz
 *.tmp
 *~
