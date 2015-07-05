@@ -15,6 +15,7 @@ use AnyEvent;
 use OpenCloset::Patch::AnyEvent::HTTPD;
 use OpenCloset::Patch::Object::Event;
 
+requires 'BUILD';
 requires 'httpd';
 
 has ping => (
