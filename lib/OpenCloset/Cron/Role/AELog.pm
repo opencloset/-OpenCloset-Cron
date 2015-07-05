@@ -123,43 +123,16 @@ __END__
 
     package Your::Module;
     use Moo;
-    with qw(
-        OpenCloset::Cron::Role::AELog
-        OpenCloset::Cron::Role::HTTPD
-    );
+    with qw( OpenCloset::Cron::Role::AELog );
 
-    sub BUILD {
-        my $self = shift;
-
-        $self->httpd->reg_cb(
-            '' => sub {
-                my ( $httpd, $req ) = @_;
-
-                $req->respond([ 404, 'not found', { 'Content-Type' => 'text/plain' }, "not found\n" ]);
-            },
-        );
-    }
+    sub BUILD { }
 
     package main;
     use AnyEvent;
     use Your::Module;
 
     my $ym = Your::Module->new(
-        port  => 20000,
         aelog => 'filter=info',
-    );
-
-    $ym->httpd->reg_cb(
-        '/foo' => sub {
-            my ( $httpd, $req ) = @_;
-
-            $req->respond([ 200, 'OK', { 'Content-Type' => 'text/plain' }, "foo\n" ]);
-        },
-        '/bar' => sub {
-            my ( $httpd, $req ) = @_;
-
-            $req->respond([ 200, 'OK', { 'Content-Type' => 'text/plain' }, "bar\n" ]);
-        },
     );
 
     AnyEvent->condvar->recv;
@@ -167,17 +140,7 @@ __END__
 
 =head1 DESCRIPTION
 
-This role will help to equip HTTPD feature in you module.
+This role will help to modify AnyEvent log in you module.
 
 
-=attr port
-
-Specify ping port via HTTP. Read-only.
-No default value.
-
-    my $ym = Your::Module->new(
-        port => 20000,
-    );
-
-
-=attr httpd
+=attr aelog
