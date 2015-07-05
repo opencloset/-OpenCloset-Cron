@@ -52,6 +52,18 @@ __END__
     use Moo;
     with qw( OpenCloset::Cron::Role::HTTPD );
 
+    sub BUILD {
+        my $self = shift;
+
+        $self->httpd->reg_cb(
+            '' => sub {
+                my ( $httpd, $req ) = @_;
+
+                $req->respond([ 404, 'not found', { 'Content-Type' => 'text/plain' }, "not found\n" ]);
+            },
+        );
+    }
+
     package main;
     use AnyEvent;
     use Your::Module;
@@ -61,11 +73,6 @@ __END__
     );
 
     $ym->httpd->reg_cb(
-        '' => sub {
-            my ( $httpd, $req ) = @_;
-
-            $req->respond([ 404, 'not found', { 'Content-Type' => 'text/plain' }, "not found\n" ]);
-        },
         '/foo' => sub {
             my ( $httpd, $req ) = @_;
 
