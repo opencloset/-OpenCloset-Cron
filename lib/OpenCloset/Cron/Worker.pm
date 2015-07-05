@@ -52,7 +52,7 @@ sub register {
 
     if ( !$cron || $cron =~ /^\s*$/ ) {
         if ( $self->_has_timer ) {
-            AE::log( info  => "$name: clearing timer, cron rule is empty" );
+            AE::log( info => "$name: clearing timer, cron rule is empty" );
             $self->_clear_cron;
             $self->_clear_timer;
         }
@@ -61,7 +61,7 @@ sub register {
 
     my @cron_items = split q{ }, $cron;
     unless ( @cron_items == 5 ) {
-        AE::log( warn  => "$name: invalid cron format" );
+        AE::log( warn => "$name: invalid cron format" );
         return;
     }
 

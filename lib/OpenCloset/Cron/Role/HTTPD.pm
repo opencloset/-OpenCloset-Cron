@@ -15,7 +15,7 @@ use AnyEvent;
 use OpenCloset::Patch::AnyEvent::HTTPD;
 use OpenCloset::Patch::Object::Event;
 
-has port  => ( is => 'ro', isa => Int, required => 1 );
+has port => ( is => 'ro', isa => Int, required => 1 );
 has httpd => ( is => 'lazy' );
 
 sub _build_httpd {
@@ -26,14 +26,8 @@ sub _build_httpd {
         'auto' => sub {
             my ( $httpd, $req ) = @_;
 
-            AE::log info => sprintf(
-                'HTTP-REQ [%s:%s]->[%s:%s] %s',
-                $req->client_host,
-                $req->client_port,
-                $httpd->host,
-                $httpd->port,
-                $req->url,
-            );
+            AE::log info => sprintf( 'HTTP-REQ [%s:%s]->[%s:%s] %s',
+                $req->client_host, $req->client_port, $httpd->host, $httpd->port, $req->url );
         },
     );
 

@@ -10,7 +10,7 @@ use namespace::clean -except => 'meta';
 our $VERSION = '0.001';
 
 extends qw( Object::Event );
-with    qw(
+with qw(
     OpenCloset::Cron::Role::HTTPD
     OpenCloset::Cron::Role::Ping
 );
@@ -18,11 +18,11 @@ with    qw(
 use AnyEvent;
 use Object::Event;
 
-has delay    => ( is => 'ro', isa => Int,      required => 1 );
-has workers  => ( is => 'ro', isa => ArrayRef, required => 1 );
+has delay   => ( is => 'ro', isa => Int,      required => 1 );
+has workers => ( is => 'ro', isa => ArrayRef, required => 1 );
 
 has _condvar => ( is => 'rw' );
-has _timer   => (
+has _timer => (
     is        => 'rw',
     predicate => '_has_timer',
     clearer   => '_clear_timer',
@@ -35,11 +35,7 @@ sub BUILD {
         'start' => sub {
             my $self = shift;
 
-            my $t = AE::timer(
-                $self->delay,
-                0,
-                sub { $self->event('do.work') },
-            );
+            my $t = AE::timer( $self->delay, 0, sub { $self->event('do.work') } );
             $self->_timer($t);
 
             my $cv = AnyEvent->condvar;
@@ -58,11 +54,7 @@ sub BUILD {
             $_->register for @{ $self->workers };
 
             $self->_clear_timer if $self->_has_timer;
-            my $t = AE::timer(
-                $self->delay,
-                0,
-                sub { $self->event('do.work') },
-            );
+            my $t = AE::timer( $self->delay, 0, sub { $self->event('do.work') } );
             $self->_timer($t);
         },
     );
@@ -71,20 +63,21 @@ sub BUILD {
         '' => sub {
             my ( $httpd, $req ) = @_;
 
-            $req->respond([ 404, 'not found', { 'Content-Type' => 'text/plain' }, "not found\n" ]);
+            $req->respond(
+                [ 404, 'not found', { 'Content-Type' => 'text/plain' }, "not found\n" ] );
         },
         '/stop' => sub {
             my ( $httpd, $req ) = @_;
 
-            $self->event('stop', 'stop by httpd');
+            $self->event( 'stop', 'stop by httpd' );
 
-            $req->respond([ 200, 'OK', { 'Content-Type' => 'text/plain' }, "stop\n" ]);
+            $req->respond( [ 200, 'OK', { 'Content-Type' => 'text/plain' }, "stop\n" ] );
         },
     );
 }
 
 sub start { $_[0]->event('start') }
-sub stop  { $_[0]->event('stop')  }
+sub stop  { $_[0]->event('stop') }
 
 1;
 

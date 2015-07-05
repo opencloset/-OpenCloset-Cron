@@ -36,20 +36,11 @@ after BUILD => sub {
             my ( $httpd, $req ) = @_;
 
             if ( $self->ping ) {
-                $req->respond([
-                    200,
-                    'OK',
-                    { 'Content-Type' => 'text/plain' },
-                    "pong\n",
-                ]);
+                $req->respond( [ 200, 'OK', { 'Content-Type' => 'text/plain' }, "pong\n" ] );
             }
             else {
-                $req->respond([
-                    400,
-                    'Bad Request',
-                    { 'Content-Type' => 'text/plain' },
-                    "failed to pong\n",
-                ]);
+                $req->respond(
+                    [ 400, 'Bad Request', { 'Content-Type' => 'text/plain' }, "failed to pong\n" ] );
             }
         },
     );
