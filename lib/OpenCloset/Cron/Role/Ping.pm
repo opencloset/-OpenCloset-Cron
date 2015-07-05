@@ -7,7 +7,7 @@ use Moo::Role;
 use MooX::Types::MooseLike::Base qw( CodeRef );
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 use AnyEvent::HTTPD;
 use AnyEvent;

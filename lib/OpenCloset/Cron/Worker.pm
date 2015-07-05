@@ -7,7 +7,7 @@ use Moo;
 use MooX::Types::MooseLike::Base qw( CodeRef Str );
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 use AnyEvent::Timer::Cron;
 use AnyEvent;
