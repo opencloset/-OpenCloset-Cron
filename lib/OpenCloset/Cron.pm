@@ -13,6 +13,7 @@ extends qw( Object::Event );
 with qw(
     OpenCloset::Cron::Role::HTTPD
     OpenCloset::Cron::Role::Ping
+    OpenCloset::Cron::Role::AELog
 );
 
 use AnyEvent;
@@ -117,6 +118,7 @@ __END__
     };
 
     my $cron = OpenCloset::Cron->new(
+        aelog   => 'filter=debug',
         port    => 8080,
         delay   => 10,
         workers => [ $worker1, $worker2 ],
@@ -144,6 +146,10 @@ See L<OpenCloset::Cron::Role::HTTPD>
 =attr ping
 
 See L<OpenCloset::Cron::Role::Ping>
+
+=attr aelog
+
+See L<OpenCloset::Cron::Role::AELog>
 
 
 =method start
