@@ -1,6 +1,8 @@
 Revision history for {{ $dist->name }}
 
 {{ $NEXT }}
+
+0.002     2015-07-06 11:29:28+09:00 Asia/Seoul
     - Use OpenCloset::Cron::Role::AELog to modify AnyEvent log
     - Update document
 

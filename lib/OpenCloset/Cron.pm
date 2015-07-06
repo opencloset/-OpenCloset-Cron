@@ -7,7 +7,7 @@ use Moo;
 use MooX::Types::MooseLike::Base qw( ArrayRef Int );
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 extends qw( Object::Event );
 with qw(
