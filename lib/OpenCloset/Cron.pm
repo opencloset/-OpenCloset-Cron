@@ -133,6 +133,19 @@ __END__
 
 =attr workers
 
+=attr port
+
+See L<OpenCloset::Cron::Role::HTTPD>
+
+=attr httpd
+
+See L<OpenCloset::Cron::Role::HTTPD>
+
+=attr ping
+
+See L<OpenCloset::Cron::Role::Ping>
+
+
 =method start
 
 =method stop
