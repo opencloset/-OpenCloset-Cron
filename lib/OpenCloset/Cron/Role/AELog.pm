@@ -7,7 +7,7 @@ use Moo::Role;
 use MooX::Types::MooseLike::Base qw( Str );
 use namespace::clean -except => 'meta';
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 use AnyEvent::Log;
 
