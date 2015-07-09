@@ -13,9 +13,10 @@ use AnyEvent::Timer::Cron;
 use AnyEvent;
 use Scalar::Util qw( weaken );
 
-has name => ( is => 'ro', isa => Str,     required => 1 );
-has cron => ( is => 'ro', isa => Str,     required => 1 );
-has cb   => ( is => 'rw', isa => CodeRef, builder  => '_default_cb' );
+has name => ( is => 'ro', isa => Str, required => 1 );
+has cron => ( is => 'ro', isa => Str, required => 1 );
+has time_zone => ( is => 'ro', isa => Str );
+has cb => ( is => 'rw', isa => CodeRef, builder => '_default_cb' );
 
 sub _default_cb {
     my $self = shift;
@@ -43,9 +44,10 @@ has _cron => (
 sub register {
     my $self = shift;
 
-    my $name = $self->name;
-    my $cron = $self->cron;
-    my $cb   = $self->cb;
+    my $name      = $self->name;
+    my $cron      = $self->cron;
+    my $time_zone = $self->time_zone;
+    my $cb        = $self->cb;
 
     $cron //= q{};
     AE::log( debug => "$name: cron[$cron]" );
@@ -78,8 +80,9 @@ sub register {
 
     AE::log( info => "$name: register [$cron]" );
     my $cron_timer = AnyEvent::Timer::Cron->new(
-        cron => $cron,
-        cb   => $cb,
+        cron      => $cron,
+        time_zone => $time_zone,
+        cb        => $cb,
     );
     $self->_cron($cron);
     $self->_timer($cron_timer);
@@ -97,9 +100,10 @@ __END__
 
     my $worker1 = do {
         my $w; $w = OpenCloset::Cron::Worker->new(
-            name => '1min_cron',
-            cron => '* * * * *',
-            cb   => sub {
+            name      => '1min_cron',
+            cron      => '* * * * *',
+            time_zone => 'Asia/Seoul',
+            cb        => sub {
                 my $name = $w->name;
                 my $cron = $w->cron;
                 AE::log( info => "$name $cron 1 minute cron worker" );
@@ -116,6 +120,8 @@ __END__
 =attr name
 
 =attr cron
+
+=attr time_zone
 
 =attr cb
 
