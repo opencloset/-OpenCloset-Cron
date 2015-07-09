@@ -95,9 +95,10 @@ __END__
 
     my $worker1 = do {
         my $w; $w = OpenCloset::Cron::Worker->new(
-            name => '1min_cron',
-            cron => '* * * * *',
-            cb   => sub {
+            name      => '1min_cron',
+            cron      => '* * * * *',
+            time_zone => 'Asia/Seoul',
+            cb        => sub {
                 my $name = $w->name;
                 my $cron = $w->cron;
                 AE::log( info => "$name\[$cron] 1 minute cron worker" );
@@ -107,9 +108,10 @@ __END__
 
     my $worker2 = do {
         my $w; $w = OpenCloset::Cron::Worker->new(
-            name => '2min_cron',
-            cron => '*/2 * * * *',
-            cb   => sub {
+            name      => '2min_cron',
+            cron      => '*/2 * * * *',
+            time_zone => 'Asia/Seoul',
+            cb        => sub {
                 my $name = $w->name;
                 my $cron = $w->cron;
                 AE::log( info => "$name\[$cron] 2 minute cron worker" );
